@@ -1,8 +1,14 @@
 library(tidyverse)
 library(haven)
 library(devtools)
-install_github("eldafani/intsvy")
-library(intsvy)
+library(RColorBrewer)
+
+# il faut la version du package intsvy qui est sur GitHub pour avoir
+# les fonctions nécessaires à l'analyse des résultats de 2015
+if (require(intsvy) == FALSE) {
+  install_github("eldafani/intsvy")
+  library(intsvy)
+}
 
 # source : http://www.oecd.org/pisa/data/2015database/
 pisa2015 <- read_spss("CY6_MS_CMB_STU_QQQ.sav")
@@ -108,6 +114,7 @@ ggplot(maths, aes(x = type, y = pourcentage, fill = forcats::fct_rev(niveau))) +
   ggtitle("Répartition dans les différents niveaux de compétence de PISA en mathématiques\nselon le lieu de naissance des parents (2015)") +
   labs(x = "", y = "", fill = "Niveau de compétence") +
   theme_bw() +
+  scale_fill_brewer(palette = "Set2") +
   scale_y_continuous(labels = function(x) paste0(x, "%")) +
   theme(plot.title = element_text(hjust = 0.5))
 
@@ -117,6 +124,7 @@ ggplot(lecture, aes(x = type, y = pourcentage, fill = forcats::fct_rev(niveau)))
   ggtitle("Répartition dans les différents niveaux de compétence de PISA en lecture\nselon le lieu de naissance des parents (2015)") +
   labs(x = "", y = "", fill = "Niveau de compétence") +
   theme_bw() +
+  scale_fill_brewer(palette = "Set2") +
   scale_y_continuous(labels = function(x) paste0(x, "%")) +
   theme(plot.title = element_text(hjust = 0.5))
 
@@ -126,5 +134,6 @@ ggplot(science, aes(x = type, y = pourcentage, fill = forcats::fct_rev(niveau)))
   ggtitle("Répartition dans les différents niveaux de compétence de PISA en science\nselon le lieu de naissance des parents (2015)") +
   labs(x = "", y = "", fill = "Niveau de compétence") +
   theme_bw() +
+  scale_fill_brewer(palette = "Set2") +
   scale_y_continuous(labels = function(x) paste0(x, "%")) +
   theme(plot.title = element_text(hjust = 0.5))
